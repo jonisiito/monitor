@@ -1,8 +1,8 @@
 
-from flask import Flask, render_template
+import flask, render_template
 import os
 import urllib.request
-app = Flask(__name__)
+app = flask.Flask(__name__)
 
 external_ip = urllib.request.urlopen('https://ident.me/').read().decode('utf8')
 
@@ -11,7 +11,7 @@ def index():
     result = os.popen('docker stats --no-stream').readlines()[1:]
     
     ram = os.popen('free -m | awk \'NR==2{printf("%.2f%%", $3/$2*100)}\'').read().strip()
-    return render_template('index.html', result=result, ram=ram)
+    return render_template('index.html', result=result, ram=ram, external_ip1='http://'+external_ip+'/cpu_usage', external_ip2='http://'+external_ip+'/ram_usage')
 
 @app.route('/cpu_usage')
 def cpu_usage():
