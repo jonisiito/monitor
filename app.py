@@ -4,7 +4,7 @@ import os
 import urllib.request
 app = Flask(__name__)
 
-external_ip = urllib.request.urlopen('https://ident.me/%').read().decode('utf8')
+external_ip = urllib.request.urlopen('https://ident.me/').read().decode('utf8')
 
 @app.route('/')
 def index():
