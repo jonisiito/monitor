@@ -1,6 +1,10 @@
+
 from flask import Flask, render_template
 import os
+import urllib.request
 app = Flask(__name__)
+
+external_ip = urllib.request.urlopen('https://ident.me/%').read().decode('utf8')
 
 @app.route('/')
 def index():
@@ -23,7 +27,7 @@ def ram_usage():
 def cookie():
   sesion = flask.request.form['sesion']
   print(sesion)
-  resp = flask.make_response(flask.redirect("http://3.237.171.101"))
+  resp = flask.make_response(flask.redirect("http://"+external_ip))
   print('a')
   resp.set_cookie('sesion', sesion)
   print('b')
@@ -31,4 +35,7 @@ def cookie():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
+    
+    
+    
 
